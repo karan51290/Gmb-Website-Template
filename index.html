@@ -1,17 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Google Tag Manager -->
-  
-  <script>
-    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id=' + i + dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer', 'config.gtmId');
-  </script>
-  <!-- End Google Tag Manager -->
-
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="description" content="Contact us at GreyCorp">
@@ -19,12 +8,6 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-  <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXX"
-  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-  <!-- End Google Tag Manager (noscript) -->
-
   <!-- Header -->
   <header>
     <h1 id="business-name-header">Business Name</h1>
@@ -70,46 +53,68 @@
     </div>
   </footer>
 
- <!-- Load config first -->
+  <!-- Load config first -->
+  <script src="config.js"></script>
+
+  <!-- Load config first -->
 <script src="config.js"></script>
 
-<!-- Then load your main script that uses the config -->
+<!-- Dynamic GTM injection -->
 <script>
-  // Google Tag Manager ID
-  const gtmNoscriptIframe = document.querySelector('noscript iframe');
-  if (gtmNoscriptIframe && config.gtmId) {
-    gtmNoscriptIframe.src = `https://www.googletagmanager.com/ns.html?id=${config.gtmId}`;
-  }
+  // Inject GTM <script> into <head>
+  (function() {
+    if (!config.gtmId) return;
 
-  // Set page title and header
-  document.title = config.businessName;
-  document.getElementById("business-name-header").textContent = config.businessName;
+    const scriptTag = document.createElement("script");
+    scriptTag.innerHTML = `
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','${config.gtmId}');
+    `;
+    document.head.insertBefore(scriptTag, document.head.firstChild);
 
-  // Header phone
-  document.getElementById("header-phone-link").textContent = `📞 ${config.phone}`;
-  document.getElementById("header-phone-link").href = `tel:${config.phone.replace(/\s+/g, '')}`;
-
-  // Call now button
-  document.getElementById("call-button").textContent = `Call Now - ${config.phone}`;
-  document.getElementById("call-button").href = `tel:${config.phone.replace(/\s+/g, '')}`;
-
-  // Google Map
-  document.getElementById("map-iframe").src = config.googleMapEmbedURL;
-
-  // Footer Info
-  document.getElementById("footer-address-link").href = config.gmbProfileURL;
-  document.getElementById("footer-address-link").textContent = config.address;
-  document.getElementById("footer-phone").textContent = config.phone;
-  document.getElementById("footer-phone").href = `tel:${config.phone.replace(/\s+/g, '')}`;
-  document.getElementById("footer-email").textContent = config.email;
-  document.getElementById("footer-email").href = `mailto:${config.email}`;
-
-  // Social links
-  document.getElementById("facebook").href = config.socialLinks.facebook;
-  document.getElementById("instagram").href = config.socialLinks.instagram;
-  document.getElementById("twitter").href = config.socialLinks.twitter;
-  document.getElementById("linkedin").href = config.socialLinks.linkedin;
+    // Inject GTM <noscript> into <body>
+    const noscriptTag = document.createElement("noscript");
+    noscriptTag.innerHTML = `<iframe src="https://www.googletagmanager.com/ns.html?id=${config.gtmId}"
+      height="0" width="0" style="display:none;visibility:hidden"></iframe>`;
+    document.body.insertBefore(noscriptTag, document.body.firstChild);
+  })();
 </script>
+
+
+  <!-- Then load your main script that uses the config -->
+  <script>
+    // Set page title and header
+    document.title = config.businessName;
+    document.getElementById("business-name-header").textContent = config.businessName;
+
+    // Header phone
+    document.getElementById("header-phone-link").textContent = `📞 ${config.phone}`;
+    document.getElementById("header-phone-link").href = `tel:${config.phone.replace(/\s+/g, '')}`;
+
+    // Call now button
+    document.getElementById("call-button").textContent = `Call Now - ${config.phone}`;
+    document.getElementById("call-button").href = `tel:${config.phone.replace(/\s+/g, '')}`;
+
+    // Google Map
+    document.getElementById("map-iframe").src = config.googleMapEmbedURL;
+
+    // Footer Info
+    document.getElementById("footer-address-link").href = config.gmbProfileURL;
+    document.getElementById("footer-address-link").textContent = config.address;
+    document.getElementById("footer-phone").textContent = config.phone;
+    document.getElementById("footer-phone").href = `tel:${config.phone.replace(/\s+/g, '')}`;
+    document.getElementById("footer-email").textContent = config.email;
+    document.getElementById("footer-email").href = `mailto:${config.email}`;
+
+    // Social links
+    document.getElementById("facebook").href = config.socialLinks.facebook;
+    document.getElementById("instagram").href = config.socialLinks.instagram;
+    document.getElementById("twitter").href = config.socialLinks.twitter;
+    document.getElementById("linkedin").href = config.socialLinks.linkedin;
+  </script>
 
 </body>
 </html>
