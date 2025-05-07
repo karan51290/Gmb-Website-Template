@@ -12,5 +12,6 @@ const config = {
     instagram: "https://instagram.com/",
     twitter: "https://twitter.com/",
     linkedin: "https://linkedin.com/"
-  }
+  },
+  gtmId: "GTM-TVD5R3KF" // <-- Replace with your real Google Tag Manager ID
 };
